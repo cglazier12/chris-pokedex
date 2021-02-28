@@ -12,24 +12,27 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-
+        @livewireStyles
     </head>
-    <header></header>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-
-
-            <!-- Page Content -->
-            <main>
-                @yield('content')
-            </main>
+    <body>
+    <div class="flex flex-col h-screen">
+        <div class="">
+            {{----- Desktop Nav Livewire Component -----}}
+                @include('layouts.navigation')
         </div>
-    </body>
+
+
+        <!-- Page Content -->
+        <div class="w-full overflow-y-scroll">
+            @yield('content')
+            {{ $slot ?? '' }}
+        </div>
+    <body>
 
     <!-- Scripts -->
+    @livewireScripts
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 

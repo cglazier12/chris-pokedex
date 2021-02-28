@@ -16,8 +16,7 @@ const getPokemon = async id => {
 
 // this looks really nice, good job. Making html templates in js is my absolute least favorite activity but this looks really clean.
 const createPokemonCard = (pokemon) => {
-    const pokemonEl = document.createElement('div');
-    pokemonEl.classList.add('pokemon');
+
     const { id, name, sprites, types } = pokemon;
     const type = types[0].type.name;
     const pokeInnerHTML = `
@@ -29,9 +28,16 @@ const createPokemonCard = (pokemon) => {
     <h3 class="name">${name}</h3>
     <small class="type">Type: <span>${type}</span></small>
   </div>
+ 
   `;
+    console.log(pokemon.id)
+    const pokemonEl = document.createElement('a');
+    pokemonEl.setAttribute('href', "pokedex/" + pokemon.id );
+    pokemonEl.classList.add('pokemon');
     pokemonEl.innerHTML = pokeInnerHTML;
     poke_container.appendChild(pokemonEl);
+
+
 }
 
 fetchPokemons();

@@ -29,14 +29,21 @@ Route::get('/dashboard', function () {
 
 Route::get('/team', [PokemonController::class, 'team'])->name('team');
 Route::get('/pokedex', [PokemonController::class, 'pokedex'])->name('pokedex');
+Route::post('/store', [PokemonController::class, 'store'])->name('pokedex.store');
 
-/*
- *  The only thing you want to watch out for with named routes is that you can only have one of the same name in the same application
- *  So In a larger app you might have an index of pokemon, and an index of trainers, and an index of items or berries
- *  Using more specific language like "pokemonIndex" or "trainerShow" will make sure that anyone looking at the code knows what exactly it is going to be doing.
- *
- */
-Route::get('/show', [PokemonController::class, 'show'])->name('show');
+// A note about wildcard routes
+// it isn't terribly implicit but this syntax is simply saying, hey, this route expects something after '/pokedex/' in order to properly "trigger"
+// '{id}' is simply helpful to let us know what the expected value is supposed to be
+// we could be even more specific and call it {pokemonId} if we wanted to but in the routes file it doesnt really matter what you call it
+// lets say we have an a tag like we do in the pokedex page that translates to 127.0.0.1:8000/pokedex/6 just like we do now.
+// we could straight up lie about what it is in the routes file and write our route like Route::get('/pokedex/{literally anything}')
+// and then we lied again in the controller show method and wrote public function show(int $name) { // do stuff  }
+// it doesnt matter what we call any of these things between point A (the blade file), point B (the web.php file) and point C (the controller)
+// if I dd($name) in the first line of the show method, it will still be an integer of 6. It will always be exactly what you set it to be in the blade file.
+
+Route::get('/pokedex/{id}', [PokemonController::class, 'show'])->name('pokedex.show');
+
+//Route::get('/show', [PokemonController::class, 'store'])->name('pokedex.store');
 
 /*
  *  weird little laravel convention thing. a page that indexes all of something like the list of all your pokemon would have the route of '/'
